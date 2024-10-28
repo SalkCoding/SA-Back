@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+</head>
+<body>
+<h1>Admin Panel</h1>
+<button onclick="findAllUsers()">Get All Users</button>
+<div id="users"></div>
+
+<h2>Find User By Username</h2>
+<input type="text" id="usernameInput" placeholder="Enter Username">
+<button onclick="findUserByUsername()">Find User</button>
+<div id="userByUsername"></div>
+
+<h2>Delete User</h2>
+<input type="text" id="deleteUserIdInput" placeholder="Enter User ID">
+<button onclick="deleteUser()">Delete User</button>
+
+<h2>Update Cell</h2>
+<input type="text" id="updateCellUserIdInput" placeholder="Enter User ID">
+<input type="text" id="cellInput" placeholder="Enter Cell">
+<button onclick="updateCell()">Update Cell</button>
+
+<h2>Update Level</h2>
+<input type="text" id="updateLevelUserIdInput" placeholder="Enter User ID">
+<input type="text" id="levelInput" placeholder="Enter Level">
+<button onclick="updateLevel()">Update Level</button>
+
+<script>
+    function findAllUsers() {
+        fetch('/admin/user/all')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('users').innerHTML = JSON.stringify(data);
+            });
+    }
+
+    function findUserByUsername() {
+        const username = document.getElementById('usernameInput').value;
+        fetch(`/admin/user/findById/${username}`)
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('userByUsername').innerHTML = JSON.stringify(data);
+            });
+    }
+
+    function deleteUser() {
+        const userId = document.getElementById('deleteUserIdInput').value;
+        fetch(`/admin/user/delete/${userId}`, {
+            method: 'DELETE'
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('User deleted successfully');
+            })
+            .catch(error => {
+                alert('Error deleting user');
+                console.error('Error:', error);
+            });
+    }
+
+    function updateCell() {
+        const userId = document.getElementById('updateCellUserIdInput').value;
+        const cell = document.getElementById('cellInput').value;
+        fetch(`/admin/user/updateCell/${userId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                cell: cell
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('Cell updated successfully');
+            })
+            .catch(error => {
+                alert('Error updating cell');
+                console.error('Error:', error);
+            });
+    }
+
+    function updateLevel() {
+        const userId = document.getElementById('updateLevelUserIdInput').value;
+        const level = document.getElementById('levelInput').value;
+        fetch(`/admin/user/updateLevel/${userId}`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                level: level
+            })
+        })
+            .then(response => response.json())
+            .then(data => {
+                alert('Level updated successfully');
+            })
+            .catch(error => {
+                alert('Error updating level');
+                console.error('Error:', error);
+            });
+    }
+</script>
+</body>
+</html>
