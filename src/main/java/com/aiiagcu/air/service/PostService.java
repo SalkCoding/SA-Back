@@ -4,9 +4,6 @@ import com.aiiagcu.air.dto.PostInput;
 import com.aiiagcu.air.dto.PostList;
 import com.aiiagcu.air.dto.PostListItem;
 import com.aiiagcu.air.dto.PostOutput;
-import com.aiiagcu.air.dto.token.IssueTokenRequest;
-import com.aiiagcu.air.dto.token.Issuer;
-import com.aiiagcu.air.dto.token.Permission;
 import com.aiiagcu.air.entity.Post;
 import com.aiiagcu.air.entity.PostBlock;
 import com.aiiagcu.air.entity.PostBlockType;
@@ -35,7 +32,6 @@ public class PostService {
     private final PostRepository postRepository;
 
     public PostInput save(PostInput postInput) {
-        // TODO: 관리자만 작성 가능
         Post postEntity = Post.toSaveEntity(postInput);
         postRepository.save(postEntity);
 
@@ -76,6 +72,25 @@ public class PostService {
 
         return postList;
     }
+
+    public PostList get5RandomPosts(){
+        PostList postList = new PostList();
+
+        List<Post> randomPostList = postRepository.findRandomPosts();
+        List<PostListItem> dtoList = new ArrayList<>();
+        long itemNum = 0;
+
+        for(Post e : randomPostList){
+            dtoList.add(PostListItem.toSaveDTO(e));
+            itemNum++;
+        }
+
+        postList.setCount(itemNum);
+        postList.setPosts(dtoList);
+
+        return postList;
+    }
+
 
     public PostOutput getPost(String id) {
         Optional<Post> post = postRepository.findById(Base62.fromBase62(id));

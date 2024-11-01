@@ -26,6 +26,11 @@ public class PostController {
         return ResponseEntity.ok(postService.getPostList(pageNumber));
     }
 
+    @GetMapping("/post/list/random")
+    public ResponseEntity<PostList> randomListPost(){
+        return ResponseEntity.ok(postService.get5RandomPosts());
+    }
+
     // 글 본문 조회
     @GetMapping("/post/{id}")
     public ResponseEntity<PostOutput> updatePost(@PathVariable("id") String id) {
@@ -50,5 +55,7 @@ public class PostController {
 
         return ResponseEntity.ok(save);
     }
+
+
 
 }
