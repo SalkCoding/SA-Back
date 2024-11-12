@@ -16,7 +16,7 @@ public class InterceptorConfig implements WebMvcConfigurer {
                 .addPathPatterns("/**")
                 .excludePathPatterns(
                         "/", "/*.css", "/*.ico", "/error", "/logo.png", "/user/**", "/people/**", "/post/{id}", "/post/list/{pageNumber}",
-                        "/calendar/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/**");
+                        "/calendar/**", "/swagger-ui.html", "/swagger-ui/**", "/v3/**" ,"/actuator/**");
         
     }
 }
