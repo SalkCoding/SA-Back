@@ -1,9 +1,7 @@
 package com.aiiagcu.air.controller;
 
 import com.aiiagcu.air.dto.CommentDTO;
-import com.aiiagcu.air.dto.UserDTO;
 import com.aiiagcu.air.service.CommentService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +12,6 @@ import java.util.Optional;
 
 
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class CommentController {
 
     private final CommentService commentService;

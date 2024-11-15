@@ -11,7 +11,6 @@ import java.util.List;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 public class ProjectController {
 
     private final ProjectService projectService;

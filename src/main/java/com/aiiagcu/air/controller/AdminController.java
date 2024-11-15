@@ -16,7 +16,6 @@ import java.util.Optional;
 @RestController
 @Slf4j
 @AllArgsConstructor
-@CrossOrigin(origins = "*", allowedHeaders = "*")
 @RequestMapping("/admin")
 public class AdminController {
 
