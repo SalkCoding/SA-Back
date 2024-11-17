@@ -1,0 +1,31 @@
+name: Backend CD Pipeline
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: [closed]
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Deploy to Oracle Cloud VM
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.REMOTE_HOST }}
+          username: ${{ secrets.REMOTE_USER }}
+          key: ${{ secrets.REMOTE_KEY }}
+          script: |
+            cd /home/ubuntu/weaver/SA-Back
+
+            git pull origin main
+
+            docker compose build backend
+
+            docker compose down
+            docker compose up -d
