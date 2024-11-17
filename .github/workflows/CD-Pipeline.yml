@@ -23,7 +23,7 @@ jobs:
           script: |
             cd /home/***/weaver/SA-Back
 
-            git pull origin main
+            sudo git pull origin main
 
             sudo docker compose build backend
 
