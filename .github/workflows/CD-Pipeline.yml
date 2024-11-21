@@ -21,12 +21,18 @@ jobs:
           username: ${{ secrets.REMOTE_USER }}
           key: ${{ secrets.REMOTE_KEY }}
           script: |
+            echo "### Change directory to /SA-Back ###"
             cd /home/***/weaver/SA-Back
 
+            echo "### Pull origin main from Github ###"
             sudo git pull origin main
 
+            echo "### Build docker backend image ###"
             sudo docker build -t salk1104/back:latest .
+
+            echo "### Push backend image to Docker hub ###"
             sudo docker push salk1104/back
-            
-            sudo docker stack rm weaver
+
+            echo "### Docker rolling deployment ###"
             sudo docker stack deploy -c ../docker-compose.yml weaver
+            sudo docker service update --image salk1104/back:latest --force weaver_backend
